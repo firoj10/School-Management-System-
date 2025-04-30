@@ -25,8 +25,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       const refreshToken = getRefreshToken();
       if (!refreshToken) {
-        // Lazy-load the store only when needed
-        // store.dispatch(logout());
+      
         return Promise.reject("No refresh token available");
       }
       try {
@@ -36,7 +35,6 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers["Authorization"] = `Bearer ${access}`;
         return axios(originalRequest);
       } catch (refreshError) {
-        // store.dispatch(logout());
         return Promise.reject(refreshError);
       }
     }

@@ -16,7 +16,7 @@ export const uploadStudent = async ({ data, files }) => {
 
   // 3) Send request
   const response = await axiosInstance.post(
-    "/api/students/create/",
+    "/api/student/application/",
     formData,
     { headers: { "Content-Type": "multipart/form-data" } }
   );
@@ -40,6 +40,6 @@ export const rejectStudentApplication = async (id) => {
 };
 
 export const getPendingApplications = async () => {
-  const response = await axios.get("/api/student/application/pending/");
+  const response = await axiosInstance.get("/api/student/application/pending/");
   return response.data;
 };

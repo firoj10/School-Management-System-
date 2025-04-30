@@ -1,7 +1,7 @@
 
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { uploadStudent, approveStudentApplication, rejectStudentApplication } from "./studentService";
+import { uploadStudent, approveStudentApplication, rejectStudentApplication, getPendingApplications } from "./studentService";
 
 // Create Student
 export const createStudent = createAsyncThunk(
@@ -50,7 +50,7 @@ export const fetchPendingApplications = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getPendingApplications();  // service call
-      console.log(response)
+      console.log(response,"response")
       return response;
     } catch (err) {
       const errorData = err.response?.data;
@@ -109,7 +109,11 @@ const studentSlice = createSlice({
       .addCase(approveApplication.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.success = true;
-        state.message = payload.message || "Application approved successfully.";
+        state.message = payload.message;
+        // অপশনাল: সরাসরি স্টেট আপডেট (যদি API রেসপন্সে আপডেটেড ডাটা থাকে)
+        state.pendingStudents = state.pendingStudents.filter(
+          student => student.id !== payload.id
+        );
       })
       .addCase(approveApplication.rejected, (state, { payload }) => {
         state.loading = false;
@@ -128,7 +132,11 @@ const studentSlice = createSlice({
       .addCase(rejectApplication.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.success = true;
-        state.message = payload.message || "Application rejected successfully.";
+        state.message = payload.message;
+        // অপশনাল: সরাসরি স্টেট আপডেট
+        state.pendingStudents = state.pendingStudents.filter(
+          student => student.id !== payload.id
+        );
       })
       .addCase(rejectApplication.rejected, (state, { payload }) => {
         state.loading = false;

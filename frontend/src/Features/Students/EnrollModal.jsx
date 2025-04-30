@@ -105,10 +105,28 @@ const EnrollModal = ({ isOpen, onClose, footer }) => {
                                 <InputField
                                     icon
                                     label="Date of Birth"
-                                    name="dob"
+                                    name="date_of_birth"
                                     type="date"
                                     register={register}
-                                    errors={errors.dob}
+                                    errors={errors.date_of_birth}
+                                    validation={{ required: "Date of birth is required" }}
+                                />
+                                <InputField
+                                    icon
+                                    label="Parent Name"
+                                    name="parent_name"
+                                    type="text"
+                                    register={register}
+                                    errors={errors.parent_name}
+                                    validation={{ required: "Date of birth is required" }}
+                                />
+                                <InputField
+                                    icon
+                                    label="Parent Contact"
+                                    name="parent_contact"
+                                    type="number"
+                                    register={register}
+                                    errors={errors.parent_contact}
                                     validation={{ required: "Date of birth is required" }}
                                 />
 

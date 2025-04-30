@@ -1,70 +1,140 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPendingApplications } from "../redux/slices/studentSlice";
-// import { fetchPendingApplications } from "../../redux/slices/studentSlice";
-// import { fetchPendingApplications } from "../../redux/student/studentSlice";  // import the new fetchPendingApplications thunk
+import { 
+  DataGrid,
+  GridActionsCellItem
+} from "@mui/x-data-grid";
+import { 
+  Box,
+  Button,
+  LinearProgress,
+  Alert,
+  Typography 
+} from "@mui/material";
+import { approveApplication, fetchPendingApplications, rejectApplication } from "../redux/slices/studentSlice";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const { pendingStudents, loading, error, message } = useSelector(state => state.student);  // get state
+  const { pendingStudents, loading, error, message } = useSelector(state => state.student);
 
   useEffect(() => {
-    dispatch(fetchPendingApplications());  // Dispatch to fetch pending applications
+    dispatch(fetchPendingApplications());
   }, [dispatch]);
 
   const handleApprove = (id) => {
-    // Dispatch the approve action here
-    console.log("Approve ID:", id);
+    dispatch(approveApplication(id))
+      .unwrap()
+      .then(() => {
+        dispatch(fetchPendingApplications()); // Refresh the list
+      });
   };
 
+  // Reject Application Handler
   const handleReject = (id) => {
-    // Dispatch the reject action here
-    console.log("Reject ID:", id);
+    dispatch(rejectApplication(id))
+      .unwrap()
+      .then(() => {
+        dispatch(fetchPendingApplications()); // Refresh the list
+      });
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {message}</div>;
-  }
+  const columns = [
+    { 
+      field: 'first_name', 
+      headerName: 'First Name', 
+      flex: 1,
+      minWidth: 150 
+    },
+    { 
+      field: 'last_name', 
+      headerName: 'Last Name', 
+      flex: 1,
+      minWidth: 150 
+    },
+    { 
+      field: 'date_of_birth', 
+      headerName: 'Date of Birth', 
+      flex: 1,
+      minWidth: 150 
+    },
+    { 
+      field: 'email', 
+      headerName: 'Email', 
+      flex: 1,
+      minWidth: 250 
+    },
+    { 
+      field: 'status', 
+      headerName: 'Status', 
+      flex: 1,
+      minWidth: 120,
+      renderCell: (params) => (
+        <Typography
+          variant="body2"
+          sx={{
+            color: params.value === 'approved' ? 'success.main' : 'error.main',
+            fontWeight: 500
+          }}
+        >
+          {params.value}
+        </Typography>
+      )
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      type: 'actions',
+      flex: 1,
+      minWidth: 200,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<Button variant="contained" color="success">Approve</Button>}
+          onClick={() => handleApprove(params.id)}
+          label="Approve"
+          disabled={loading} // Disable during API call
+        />,
+        <GridActionsCellItem
+          icon={<Button variant="outlined" color="error">Reject</Button>}
+          onClick={() => handleReject(params.id)}
+          label="Reject"
+          disabled={loading} // Disable during API call
+        />,
+      ],
+    },
+  ];
 
   return (
-    <div>
-      <h1>Pending Applications</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Date of Birth</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pendingStudents && pendingStudents.map((student) => (
-            <tr key={student.id}>
-              <td>{student.first_name}</td>
-              <td>{student.last_name}</td>
-              <td>{student.date_of_birth}</td>
-              <td>{student.email}</td>
-              <td>{student.status}</td>
-              <td>
-                <button onClick={() => handleApprove(student.id)}>Approve</button>
-                <button onClick={() => handleReject(student.id)}>Reject</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Box sx={{ height: 600, width: '100%', p: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Pending Applications
+      </Typography>
+
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {message}
+        </Alert>
+      )}
+
+      <DataGrid
+        rows={pendingStudents || []}
+        columns={columns}
+        loading={loading}
+        autoPageSize
+        disableSelectionOnClick
+        components={{
+          LoadingOverlay: LinearProgress,
+        }}
+        sx={{
+          boxShadow: 2,
+          border: 2,
+          borderColor: 'primary.light',
+          '& .MuiDataGrid-cell:hover': {
+            backgroundColor: 'action.hover',
+          },
+        }}
+      />
+    </Box>
   );
 };
 
-// export default PendingApplicationsList;
-
-  
-  export default AdminDashboard;
+export default AdminDashboard;

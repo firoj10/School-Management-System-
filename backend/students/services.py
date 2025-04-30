@@ -72,3 +72,17 @@ class StudentApplicationService:
         send_custom_email(subject, message, app.email)
 
         return user
+    
+    
+    @staticmethod
+    @transaction.atomic
+  
+    def reject(pk):
+        try:
+            application = StudentApplication.objects.get(pk=pk)
+            if application.status != 'pending':
+                raise ValueError("Only pending applications can be rejected.")
+            application.status = 'rejected'
+            application.save()
+        except StudentApplication.DoesNotExist:
+            raise ValueError("Application not found.")

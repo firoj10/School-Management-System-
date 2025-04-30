@@ -1,26 +1,29 @@
+// tokenUtils.js
 
-
-//  Created By Firoj Hasan
+// Access Token Get
+// tokenUtils.js
 export const getAccessToken = () => {
-    return localStorage.getItem("access_token");
-  };
-  
-  export const getRefreshToken = () => {
-    return localStorage.getItem("refresh_token");
-  };
-  
-  export const setTokens = (accessToken, refreshToken) => {
-    localStorage.setItem("access_token", accessToken);
-    localStorage.setItem("refresh_token", refreshToken);
-  };
-  
-  export const clearTokens = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("member");
-  };
-  
-  export const hasAccessToken = () => {
-    return !!getAccessToken();
-  };
-  
+  return localStorage.getItem('accessToken'); // Verify the key matches where you store the token
+};
+
+// Refresh Token Get
+export const getRefreshToken = () => {
+  return localStorage.getItem("refreshToken");
+};
+
+// Tokens Save
+export const setTokens = (access, refresh) => {
+  localStorage.setItem("accessToken", access);
+  localStorage.setItem("refreshToken", refresh);
+};
+
+// Tokens Remove
+export const clearTokens = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+};
+
+// Check if User is Authenticated
+export const isAuthenticated = () => {
+  return !!getAccessToken();
+};
