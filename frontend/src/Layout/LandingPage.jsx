@@ -249,10 +249,79 @@ const LandingPage = () => {
         </div>
         <div className="text-center mt-8">© {new Date().getFullYear()} {footer.schoolName}. All rights reserved.</div>
       </footer>
+
+      <div className="flex items-center justify-center h-screen bg-blue-50">
+      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
+        {/* Facebook Logo */}
+        <div className="flex justify-center mb-6">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+            alt="Facebook logo"
+            className="w-24"
+          />
+        </div>
+
+        {/* Login Form */}
+        <form className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-gray-700 font-medium">Email or Phone</label>
+            <input
+              type="text"
+              id="email"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Email or Phone"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-gray-700 font-medium">Password</label>
+            <input
+              type="password"
+              id="password"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Password"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          >
+            Log In
+          </button>
+        </form>
+
+        {/* Forgot password link */}
+        <div className="mt-4 text-center">
+          <a href="#" className="text-blue-500 text-sm">Forgotten password?</a>
+        </div>
+
+        {/* Sign Up and Create Account */}
+        <div className="mt-6 text-center">
+          <p className="text-gray-700 text-sm">
+            Don't have an account?{' '}
+            <a href="#" className="text-blue-500 font-medium">Create new account</a>
+          </p>
+        </div>
+      </div>
+    </div>
     </div>
   );
 };
 
 export default LandingPage;
+
+
+
+// import React from 'react';
+
+// const FacebookLoginPage = () => {
+//   return (
+  
+//   );
+// };
+
+// export default FacebookLoginPage;
+
 
 

@@ -28,6 +28,30 @@ const DashboardLayout = () => {
   }, []);
 
   // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
+  // Only toggle sidebar on mobile devices
   const toggleSidebar = () => {
     if (isMobile) {
       setSidebarOpen((prev) => !prev);
