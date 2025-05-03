@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <PrivateRoute allowedRoles={["teacher"]} />,
+    element: <PrivateRoute allowedRoles={["teacher","admin"]} />,
     children: [
       {
         element: <Main />,
@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <PrivateRoute allowedRoles={["student"]} />,
+    element: <PrivateRoute allowedRoles={["student","admin"]} />,
     children: [
       {
         element: <Main />,
