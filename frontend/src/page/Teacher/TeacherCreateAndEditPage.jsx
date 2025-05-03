@@ -1,3 +1,4 @@
+import TeacherForm from "../../Features/Teacher/TeacherForm";
 
 
 const CreateTeacherPage= () => {
@@ -5,6 +6,8 @@ const CreateTeacherPage= () => {
 
     return (
      <>
+
+     <TeacherForm/>
      </>
     );
   };
