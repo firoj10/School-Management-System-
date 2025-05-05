@@ -50,6 +50,7 @@ INSTALLED_APPS = [
      'core',
      'students',
      'teachers' ,
+     'departments' ,
      # Your students app
 
   

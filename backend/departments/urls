@@ -1,7 +1,0 @@
-from django.urls import path  
-from .views import DepartmentListCreateAPI, DepartmentRetrieveUpdateDestroyAPI  
-
-urlpatterns = [  
-    path('departments/', DepartmentListCreateAPI.as_view(), name='department-list-create'),  
-    path('departments/<int:id>/', DepartmentRetrieveUpdateDestroyAPI.as_view(), name='department-detail'),  
-]  
