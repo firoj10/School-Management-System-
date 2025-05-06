@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from .models import Department
+from .models import Department,Subject
 
 class DepartmentService:
     """
@@ -61,3 +61,37 @@ class DepartmentService:
     def get_department_by_id(department_id):
         """Retrieve single department by ID"""
         return Department.objects.get(pk=department_id, is_active=True)
+    
+    
+    
+    
+#     from django.core.exceptions import ValidationError
+# from .models import Subject
+
+class SubjectService:
+    @staticmethod
+    def create_subject(**validated_data):
+        code = validated_data.get('code', '').upper()
+        if Subject.objects.filter(code=code).exists():
+            raise ValidationError("Subject code already exists")
+        return Subject.objects.create(**validated_data)
+
+    @staticmethod
+    def update_subject(subject_id, **update_data):
+        subject = Subject.objects.get(pk=subject_id)
+        if 'code' in update_data:
+            new_code = update_data['code'].upper()
+            if Subject.objects.exclude(pk=subject_id).filter(code=new_code).exists():
+                raise ValidationError("Subject code already exists")
+            update_data['code'] = new_code
+        for attr, value in update_data.items():
+            setattr(subject, attr, value)
+        subject.save()
+        return subject
+
+    @staticmethod
+    def delete_subject(subject_id):
+        subject = Subject.objects.get(pk=subject_id)
+        subject.is_active = False
+        subject.save()
+        return subject

@@ -45,9 +45,9 @@ from django.core.exceptions import ValidationError  # Add this import
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .services import DepartmentService
-from .serializers import DepartmentSerializer
-from .models import Department
+from .services import DepartmentService,SubjectService
+from .serializers import DepartmentSerializer,SubjectSerializer
+from .models import Department,Subject
 
 # from rest_framework.views import APIView
 # from rest_framework.response import Response
@@ -110,3 +110,85 @@ class DepartmentRetrieveUpdateDestroyAPI(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Department.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        
+class SubjectListCreateAPI(APIView):
+    def get(self, request):
+        subjects = Subject.objects.filter(is_active=True)
+        serializer = SubjectSerializer(subjects, many=True)
+        return Response({
+            'message': 'Active subjects retrieved successfully.',
+            'data': serializer.data
+        }, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = SubjectSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                subject = SubjectService.create_subject(**serializer.validated_data)
+                return Response({
+                    'message': 'Subject created successfully.',
+                    'data': SubjectSerializer(subject).data
+                }, status=status.HTTP_201_CREATED)
+            except ValidationError as e:
+                return Response({
+                    'message': 'Subject creation failed.',
+                    'error': str(e)
+                }, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            'message': 'Invalid subject data.',
+            'errors': serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SubjectRetrieveUpdateDestroyAPI(APIView):
+    def get_object(self, pk):
+        return Subject.objects.get(pk=pk, is_active=True)
+
+    def get(self, request, pk):
+        try:
+            subject = self.get_object(pk)
+            serializer = SubjectSerializer(subject)
+            return Response({
+                'message': 'Subject retrieved successfully.',
+                'data': serializer.data
+            }, status=status.HTTP_200_OK)
+        except Subject.DoesNotExist:
+            return Response({
+                'message': 'Subject not found.'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, pk):
+        try:
+            subject = self.get_object(pk)
+            serializer = SubjectSerializer(subject, data=request.data)
+            if serializer.is_valid():
+                updated_subject = SubjectService.update_subject(pk, **serializer.validated_data)
+                return Response({
+                    'message': 'Subject updated successfully.',
+                    'data': SubjectSerializer(updated_subject).data
+                }, status=status.HTTP_200_OK)
+            return Response({
+                'message': 'Invalid subject data.',
+                'errors': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+        except Subject.DoesNotExist:
+            return Response({
+                'message': 'Subject not found.'
+            }, status=status.HTTP_404_NOT_FOUND)
+        except ValidationError as e:
+            return Response({
+                'message': 'Subject update failed.',
+                'error': str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        try:
+            SubjectService.delete_subject(pk)
+            return Response({
+                'message': 'Subject deleted successfully.'
+            }, status=status.HTTP_204_NO_CONTENT)
+        except Subject.DoesNotExist:
+            return Response({
+                'message': 'Subject not found.'
+            }, status=status.HTTP_404_NOT_FOUND)
