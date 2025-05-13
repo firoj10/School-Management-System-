@@ -34,4 +34,5 @@ class DepartmentViewTests(APITestCase):
         response = self.client.patch(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.department.refresh_from_db()
-        self.assertEqual(self.department.name, 'Updated Name')
+        self.assertEqual(self.department.name, 'Updated Name')  # Fixed line
+

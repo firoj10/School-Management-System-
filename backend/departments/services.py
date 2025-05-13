@@ -5,7 +5,6 @@ class DepartmentService:
     """
     Service layer for handling department-related business logic
     """
-    
     @staticmethod
     def create_department(code, name, description=None):
         """

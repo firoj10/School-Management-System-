@@ -1,7 +1,7 @@
-
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
+from audit.registry import AuditModelRegistry
 
 class Department(models.Model):
     """
@@ -34,7 +34,9 @@ class Department(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-        
+
+# Register Department for auditing
+AuditModelRegistry.register(Department)  # Moved outside class
         
 class Subject(models.Model):
     code = models.CharField(
@@ -62,3 +64,6 @@ class Subject(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.name}"
+
+# Register Subject for auditing
+# AuditModelRegistry.register(Subject)  # Added for Subject

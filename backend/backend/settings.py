@@ -47,10 +47,12 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Your custom apps
+      'audit',
      'core',
      'students',
      'teachers' ,
      'departments' ,
+     'courses' ,
      # Your students app
 
   
@@ -69,6 +71,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
        'corsheaders.middleware.CorsMiddleware',
+       'audit.middleware.RequestMiddleware',  #    'audit.middleware.RequestMiddleware',
+
 
 ]
 
