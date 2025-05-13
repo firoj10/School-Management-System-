@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
-import Dashboard from "../Layout/Dashboard"; 
 
 import Login from "../Features/auth/Login";
 import Register from "../Features/auth/Register";
@@ -12,7 +11,7 @@ import Unauthorized from "../Layout/Unauthorized";
 import LandingPage from "../Layout/LandingPage";
 import CreateStudentForm from "../Features/Students/CreateStudentForm";
 import PendingApplicationsList from "../Features/Students/ApplicationsList";
-import CreateTeacherPage from "../page/Teacher/TeacherCreateAndEditPage";
+import TeacherCreateUpdatePage from "../Features/Teacher/TeacherCreateUpdatePage/TeacherCreateUpdatePage";
 
 export const router = createBrowserRouter([
   {
@@ -44,8 +43,8 @@ export const router = createBrowserRouter([
             element: <PendingApplicationsList />,
           },
           {
-            path: "teacher-page",
-            element: <CreateTeacherPage />,
+            path: "/admin/create-update-page",
+            element: <TeacherCreateUpdatePage />,
           },
         ],
       },

@@ -1,16 +1,16 @@
-import TeacherForm from "../../Features/Teacher/TeacherForm";
+// import TeacherForm from "../../Features/Teacher/TeacherForm";
 
 
-const CreateTeacherPage= () => {
+// const CreateTeacherPage= () => {
 
 
-    return (
-     <>
+//     return (
+//      <>
 
-     <TeacherForm/>
-     </>
-    );
-  };
+//      <TeacherForm/>
+//      </>
+//     );
+//   };
   
-  export default CreateTeacherPage;
+//   export default CreateTeacherPage;
   

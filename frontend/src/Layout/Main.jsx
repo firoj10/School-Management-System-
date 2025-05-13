@@ -39,20 +39,20 @@ const Main = () => {
   };
 
   return (
-    <>
+    <div className=' ' >
       <Navbar
         toggleSidebar={toggleSidebar}
         toggleDropdown={toggleDropdown}
         isDropdownOpen={isDropdownOpen}
       />
       <Sidebar isSidebarOpen={isSidebarOpen} />
-      <div className=" sm:ml-64 mb-24">
-        <div className="p-4  rounded-lg  mt-14" style={{ backgroundColor: '#F3F4F6' }}>
+      <div className=" sm:ml-64 mb-24 min-h-screen" style={{ backgroundColor: '#F3F4F6' }}>
+        <div className="p-4  rounded-lg  mt-14" >
           <Outlet />
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
